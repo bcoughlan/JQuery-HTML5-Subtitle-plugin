@@ -1,15 +1,14 @@
 Usage
 =====
 
-HTML:
------
+```html
 <video id="examplevideo" />
     <source src="myvideo.webm" type="video/webm" />
     <track kind="subtitle" src-lang="US" label="English" src="{{STATIC_URL}}media/test.srt" />
 </video>
+```
 
-JS:
----
+```javascript
 $(function () {
    var video = $('#examplevideo');
    video.srt(); //Starts disabled
@@ -20,3 +19,4 @@ $(function () {
        console.log('Subs are enabled!)
    }
 });
+```

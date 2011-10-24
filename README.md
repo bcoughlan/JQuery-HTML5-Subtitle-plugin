@@ -16,7 +16,7 @@ $(function () {
    video.srt('disable'); //Disable (and hide subtitles
        
    if (video.srt('isEnabled')) { // Check if subs are enabled
-       console.log('Subs are enabled!)
+       console.log('Subs are enabled!')
    }
 });
 ```

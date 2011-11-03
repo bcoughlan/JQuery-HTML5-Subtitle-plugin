@@ -1,7 +1,7 @@
 /*
  * jQuery srt
  *
- * version 0.2
+ * version 0.3
  *
  * Licensed under the GPL license:
  *   http://www.gnu.org/licenses/gpl.html
@@ -29,7 +29,8 @@
         'color' : '#fff',
         'font-size' : '1.5em',
         'line-height' : '1.5em',
-        'padding' : '.3em 2.5em'
+        'padding' : '.3em 2.5em',
+        'max-width': '50%'
     }
 
     function toSeconds(t) {
@@ -43,11 +44,12 @@
     }
 
     var splitSubtitles = function(srt) {
-        var subtitles = {};
         srt = $.trim(srt.replace(/\r\n|\r|\n/g, '\n')).split('\n\n');
 
-        for(s in srt) {
-            st = srt[s].split('\n');
+        var subtitles = new Array(srt.length);
+
+        for (var i=0; i<srt.length; i++) {
+            st = srt[i].split('\n');
             if(st.length >= 2) {
                 var n = st[0];
                 split = st[1].split(' --> ');
@@ -59,8 +61,9 @@
                         text += '<br />' + st[j];
                     }
                 }
-
-                subtitles[start] = {
+                
+                subtitles[i]={
+                    start : start,
                     end : end,
                     text : text
                 };
@@ -76,13 +79,14 @@
         var subtitles = v[video]['subtitles'];
 
         var subtitle = -1;
-        for(s in subtitles) {
-            if(s > currentTime) {
-                subtitle = s;
+        for (var i=0; i<subtitles.length; i++) {
+            if(subtitles[i].end > currentTime) {
+                subtitle = i;
                 break;
             }
         }
-        if(subtitle > 0) {
+
+        if(subtitle >= 0) {
             if(subtitle != currentSubtitle) {
                 srtEl.html(subtitles[subtitle].text);
                 srtContainerEl.show();
